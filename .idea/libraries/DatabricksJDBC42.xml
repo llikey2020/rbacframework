@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="DatabricksJDBC42">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../DatabricksJDBC42.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../DatabricksJDBC42.jar!/com/databricks/client/jdbc42/internal/codegen/templates" />
+    </SOURCES>
+  </library>
+</component>

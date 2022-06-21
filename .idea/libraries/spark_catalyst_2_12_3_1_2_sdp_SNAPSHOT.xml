@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="spark-catalyst_2.12-3.1.2-sdp-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../spark-catalyst_2.12-3.1.2-sdp-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

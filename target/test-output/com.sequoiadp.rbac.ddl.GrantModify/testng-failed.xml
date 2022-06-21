@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite verbose="0" name="Failed suite [com.sequoiadp.rbac.ddl.GrantModify]">
+  <test thread-count="5" verbose="0" name="Command line test(failed)">
+    <classes>
+      <class name="com.sequoiadp.rbac.ddl.GrantModify">
+        <methods>
+          <include name="test"/>
+          <include name="setup"/>
+          <include name="recycle"/>
+          <include name="tearDown"/>
+          <include name="cleanandbuild"/>
+        </methods>
+      </class> <!-- com.sequoiadp.rbac.ddl.GrantModify -->
+    </classes>
+  </test> <!-- Command line test(failed) -->
+</suite> <!-- Failed suite [com.sequoiadp.rbac.ddl.GrantModify] -->
