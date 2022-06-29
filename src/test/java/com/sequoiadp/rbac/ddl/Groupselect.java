@@ -29,7 +29,7 @@ public class Groupselect extends SDPTestBase {
             st1= conn1.createStatement();
 
 
-            String addgpusersql = HiveConnection.getInstance().alterSql("group", getConfig("testGroup"),"add","user",getConfig("testUser"));
+            String addgpusersql = HiveConnection.getInstance().alterUserSql(getConfig("testGroup"),"add",getConfig("testUser"));
             st1.executeQuery(addgpusersql);
 
             String usagesql = HiveConnection.getInstance().usageSql(getConfig("dbName"));

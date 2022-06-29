@@ -10,7 +10,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public class HiveConnection {
     private static HiveConnection instsance;
     private static Lock lock= new ReentrantLock();
-
     public static HiveConnection getInstance(){
         if(instsance==null){
             instsance=new HiveConnection();
@@ -41,7 +40,6 @@ public class HiveConnection {
             return conn;
         }
     }
-
     public String grantSql (String privilege,String dbType,String Dtname,String userType,String username){
         StringBuilder sb=new StringBuilder();
         sb.append("grant ").append(privilege).append(" on ").append(dbType).append(' ');
@@ -49,10 +47,14 @@ public class HiveConnection {
         return sb.toString();
     }
 
-    public  String revokeDbFromUser(String privilege){
-        String s = "revoke "+ privilege + " on database " + ParaBeen.getConfig("dbName") + " from user " + ParaBeen.getConfig("testUser") + ";";
-        return s;
+    public String revokeSql (String privilege,String dbType,String Dtname,String userType,String username){
+        StringBuilder sb=new StringBuilder();
+        sb.append("revoke ").append(privilege).append(" on ").append(dbType).append(' ');
+        sb.append(Dtname).append(" from ").append(userType).append(' ').append(username).append(';');
+        return sb.toString();
     }
+
+
     public String selectTv (String dbName,String tabname){
         String s = "select * from " + dbName + "." + tabname + ";";
         return s;
@@ -61,8 +63,8 @@ public class HiveConnection {
         return "use " + dbName + ";" ;
     }
 
-    public String alterSql(String st1,String st2,String st3,String st4,String st5){
-        return "alter " +st1 + " "+ st2 + " " + st3 + " " +st4  + " " + st5 + ";";
+    public String alterUserSql(String groupName,String action,String testUser){
+        return "alter group " + groupName + " " + action + " user " + testUser + ";";
     }
 
     public String dropSql(String dt,String name){

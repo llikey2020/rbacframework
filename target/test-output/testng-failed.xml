@@ -7,76 +7,20 @@
   <parameter name="TESTUSER" value="sdbadmin"/>
   <parameter name="TESTPWD" value="sdbadmin"/>
   <parameter name="DBNAME" value="testdb"/>
-  <parameter name="TESTGROUP" value="testgroup"/>
+  <parameter name="TESTGROUP" value="group1"/>
   <parameter name="ROOTUSER" value="sequoiadb"/>
   <test verbose="0" name="rbac(failed)">
     <classes>
-      <class name="com.sequoiadp.rbac.ddl.WithoutUsage">
+      <class name="com.sequoiadp.rbac.ddl.RevokeSelectOnTable01">
         <methods>
-          <include name="test"/>
+          <include name="Test"/>
           <include name="setup"/>
-          <include name="tearDown"/>
           <include name="recycle"/>
+          <include name="tearDown"/>
           <include name="initSuite"/>
           <include name="cleanandbuild"/>
-          <include name="finitSuite"/>
         </methods>
-      </class> <!-- com.sequoiadp.rbac.ddl.WithoutUsage -->
-      <class name="com.sequoiadp.rbac.ddl.GrantSelect">
-        <methods>
-          <include name="setup"/>
-          <include name="test"/>
-          <include name="tearDown"/>
-          <include name="recycle"/>
-          <include name="initSuite"/>
-          <include name="cleanandbuild"/>
-          <include name="finitSuite"/>
-        </methods>
-      </class> <!-- com.sequoiadp.rbac.ddl.GrantSelect -->
-      <class name="com.sequoiadp.rbac.ddl.Groupselect">
-        <methods>
-          <include name="test"/>
-          <include name="setup"/>
-          <include name="tearDown"/>
-          <include name="recycle"/>
-          <include name="initSuite"/>
-          <include name="cleanandbuild"/>
-          <include name="finitSuite"/>
-        </methods>
-      </class> <!-- com.sequoiadp.rbac.ddl.Groupselect -->
-      <class name="com.sequoiadp.rbac.ddl.NoSelectOnTable">
-        <methods>
-          <include name="test"/>
-          <include name="setup"/>
-          <include name="tearDown"/>
-          <include name="recycle"/>
-          <include name="initSuite"/>
-          <include name="cleanandbuild"/>
-          <include name="finitSuite"/>
-        </methods>
-      </class> <!-- com.sequoiadp.rbac.ddl.NoSelectOnTable -->
-      <class name="com.sequoiadp.rbac.ddl.NoSelectOnTableByGroup">
-        <methods>
-          <include name="test"/>
-          <include name="setup"/>
-          <include name="tearDown"/>
-          <include name="recycle"/>
-          <include name="initSuite"/>
-          <include name="cleanandbuild"/>
-          <include name="finitSuite"/>
-        </methods>
-      </class> <!-- com.sequoiadp.rbac.ddl.NoSelectOnTableByGroup -->
-      <class name="com.sequoiadp.rbac.ddl.GrantModify">
-        <methods>
-          <include name="test"/>
-          <include name="setup"/>
-          <include name="tearDown"/>
-          <include name="recycle"/>
-          <include name="initSuite"/>
-          <include name="cleanandbuild"/>
-          <include name="finitSuite"/>
-        </methods>
-      </class> <!-- com.sequoiadp.rbac.ddl.GrantModify -->
+      </class> <!-- com.sequoiadp.rbac.ddl.RevokeSelectOnTable01 -->
     </classes>
   </test> <!-- rbac(failed) -->
 </suite> <!-- Failed suite [rbac] -->

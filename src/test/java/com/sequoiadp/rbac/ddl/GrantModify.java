@@ -40,7 +40,7 @@ public class GrantModify extends SDPTestBase {
             String usage= HiveConnection.getInstance().usageSql(getConfig("dbName"));
             st2.executeQuery(usage);
 
-            String insertsql = "insert into " + getConfig("dbName")+"."+tableName + " values(1002,'safhhwrgbg');";
+            String insertsql = "insert into " + getConfig("dbName")+"."+tableName + " values(1002);";
             st2.executeQuery(insertsql);
 
         }catch ( SQLException e){

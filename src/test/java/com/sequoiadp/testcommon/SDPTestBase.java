@@ -16,6 +16,24 @@ import java.sql.Statement;
 import java.util.Properties;
 
 public abstract class SDPTestBase {
+    protected String tableName;
+    private boolean hasUsage=true;
+    private boolean hasGroup=false;
+    private Connection conn;
+
+
+    public void setTableName(String tablename){
+        tableName=tablename;
+    }
+
+    protected void notUsage(){
+        hasUsage=false;
+    }
+
+    protected void hasGroup(){
+        hasGroup=true;
+    }
+
     @Parameters({"HOSTNAME", "PORT", "ROOTUSER", "ROOTPWD", "TESTUSER",
             "TESTPWD", "DBNAME", "TESTGROUP"})
     @BeforeSuite(alwaysRun = true)
@@ -49,34 +67,6 @@ public abstract class SDPTestBase {
         conn.close();
     }
 
-    @AfterTest
-    public void recycle() throws SQLException {
-        Connection conn = HiveConnection.getInstance().getAdminConnect();
-        Statement st;
-        st = conn.createStatement();
-        String clensdb=HiveConnection.getInstance().dropSql("database",getConfig("dbName"));
-        st.executeQuery(clensdb);
-        conn.close();
-    }
-
-    protected String tableName;
-    private boolean hasUsage=true;
-    private boolean hasGroup=false;
-    private Connection conn;
-
-
-    public void setTableName(String tablename){
-        tableName=tablename;
-    }
-
-    protected void notUsage(){
-        hasUsage=false;
-    }
-
-    protected void hasGroup(){
-        hasGroup=true;
-    }
-
     @BeforeClass
     public void setup() throws SQLException {
         conn = HiveConnection.getInstance().getAdminConnect();
@@ -84,11 +74,12 @@ public abstract class SDPTestBase {
         st = conn.createStatement();
         String usesql = "use " + getConfig("dbName") + ";" ;
         st.executeQuery(usesql);
+        String s3 = "s3a://sdbbucket2/" + tableName;
         //建表
-        String createtablsql = "create table if not exists " + tableName + "(id int,name varchar(20));";
+        String createtablsql = "create table if not exists " + tableName + "(id int)using delta location \"" + s3 + "\" " + ";" ;
         st.executeQuery(createtablsql);
         //插入数据
-        String insertsql = "insert into " + tableName + " values(1001,'swtshs');";
+        String insertsql = "insert into " + tableName + " values(1001);";
         st.executeQuery(insertsql);
         if(hasUsage) {
             String grantDatabase = HiveConnection.getInstance().grantSql("usage","database",getConfig("dbName"),"user",getConfig("testUser"));
@@ -112,12 +103,23 @@ public abstract class SDPTestBase {
             st.executeQuery(dropgroup);
         }
         if(hasUsage) {
-            String revokeusagesql  = HiveConnection.getInstance().revokeDbFromUser("usage");
+            String revokeusagesql  = HiveConnection.getInstance().revokeSql("usage","database",getConfig("dbName"),"user",getConfig("testUser"));
             st.executeQuery(revokeusagesql);
         }
         String droptablesql = HiveConnection.getInstance().dropSql("table",tableName);
         st.executeQuery(droptablesql);
         st.close();
     }
+
+    @AfterTest
+    public void recycle() throws SQLException {
+        Connection conn = HiveConnection.getInstance().getAdminConnect();
+        Statement st;
+        st = conn.createStatement();
+        String clensdb=HiveConnection.getInstance().dropSql("database",getConfig("dbName"));
+        st.executeQuery(clensdb);
+        conn.close();
+    }
+
 
 }

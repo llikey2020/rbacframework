@@ -1,24 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="rbac" parallel="methods" thread-count="5" verbose="10">
+<suite name="rbac" parallel="methods" thread-count="1" verbose="1">
 
     <!--ip地址，目标spark-thriftserver的IP地址-->
-<!--    <parameter name="HOSTNAME" value="${HOSTNAME}"/>-->
-    <parameter name="HOSTNAME" value="192.168.16.75"/>
+<!--    <parameter name="HOSTNAME" value="192.168.16.75"/>-->
+<!--    &lt;!&ndash;thriftserver端口号，传入10000&ndash;&gt;-->
+<!--    <parameter name="PORT" value="10000"/>-->
+<!--    &lt;!&ndash;rbac管理员用户名&ndash;&gt;-->
+<!--    <parameter name="ROOTUSER" value="sequoiadb"/>-->
+<!--    &lt;!&ndash;rbac管理员用户密码&ndash;&gt;-->
+<!--    <parameter name="ROOTPWD" value="gsd4"/>-->
+<!--    &lt;!&ndash;rbac测试用户名&ndash;&gt;-->
+<!--    <parameter name="TESTUSER" value="sdbadmin"/>-->
+<!--    &lt;!&ndash;rbac测试用户密码&ndash;&gt;-->
+<!--    <parameter name="TESTPWD" value="asfdsg"/>-->
+<!--    &lt;!&ndash;测试数据库名字&ndash;&gt;-->
+<!--    <parameter name="DBNAME" value="testdb"/>-->
+<!--    &lt;!&ndash;测试group名字&ndash;&gt;-->
+<!--    <parameter name="TESTGROUP" value="group1"/>-->
+
+
+
+    <parameter name="HOSTNAME" value="${HOSTNAME}"/>
     <!--thriftserver端口号，传入10000-->
-    <parameter name="PORT" value="10000"/>
+    <parameter name="PORT" value="${PORT}"/>
     <!--rbac管理员用户名-->
-    <parameter name="ROOTUSER" value="sequoiadb"/>
+    <parameter name="ROOTUSER" value="${ROOTUSER}"/>
     <!--rbac管理员用户密码-->
-    <parameter name="ROOTPWD" value="123456"/>
+    <parameter name="ROOTPWD" value="${ROOTPWD}"/>
     <!--rbac测试用户名-->
-    <parameter name="TESTUSER" value="sdbadmin"/>
+    <parameter name="TESTUSER" value="${TESTUSER}"/>
     <!--rbac测试用户密码-->
-    <parameter name="TESTPWD" value="sdbadmin"/>
+    <parameter name="TESTPWD" value="${TESTPWD}"/>
     <!--测试数据库名字-->
-    <parameter name="DBNAME" value="testdb"/>
+    <parameter name="DBNAME" value="${DBNAME}"/>
     <!--测试group名字-->
-    <parameter name="TESTGROUP" value="testgroup"/>
+    <parameter name="TESTGROUP" value="${TESTGROUP}"/>
 
     <test name="rbac">
         <packages>

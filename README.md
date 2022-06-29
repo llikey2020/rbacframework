@@ -13,50 +13,45 @@ RBAC 是为 Spark SQL 提供的库表级权限控制服务。通过将 Spark SQL
 
 #### 依赖
 
-<dependencies>
-        <dependency>
-            <groupId>org.apache.hive</groupId>
-            <artifactId>hive-jdbc</artifactId>
-            <version>2.3.7</version>
-        </dependency>
+spark需要关闭鉴权 才能够通过jdbc连接到thriftserver
 
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-common</artifactId>
             <version>2.7.4</version>
         </dependency>
-
+    
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>6.13.1</version>
         </dependency>
-
+    
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-catalyst</artifactId>
             <version>3.1.2</version>
         </dependency>
-
+    
         <dependencies>
         <dependency>
             <groupId>org.apache.hive</groupId>
             <artifactId>hive-jdbc</artifactId>
             <version>2.3.7</version>
         </dependency>
-
+    
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-common</artifactId>
             <version>2.7.4</version>
         </dependency>
-
+    
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>6.13.1</version>
         </dependency>
-
+    
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-catalyst</artifactId>

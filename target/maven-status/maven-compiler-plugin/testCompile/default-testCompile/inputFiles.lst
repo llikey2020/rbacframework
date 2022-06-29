@@ -4,6 +4,7 @@ D:\rbac\rbacTest\src\test\java\com\sequoiadp\testcommon\HiveConnection.java
 D:\rbac\rbacTest\src\test\java\com\sequoiadp\rbac\ddl\CreateDatabase123.java
 D:\rbac\rbacTest\src\test\java\com\sequoiadp\testcommon\ParaBeen.java
 D:\rbac\rbacTest\src\test\java\com\sequoiadp\rbac\ddl\Groupselect.java
+D:\rbac\rbacTest\src\test\java\com\sequoiadp\rbac\ddl\RevokeSelectOnTable01.java
 D:\rbac\rbacTest\src\test\java\com\sequoiadp\testcommon\SDPTestBase.java
 D:\rbac\rbacTest\src\test\java\com\sequoiadp\rbac\ddl\GrantSelect.java
 D:\rbac\rbacTest\src\test\java\com\sequoiadp\rbac\ddl\WithoutUsage.java

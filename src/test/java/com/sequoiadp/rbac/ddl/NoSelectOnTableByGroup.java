@@ -27,7 +27,7 @@ public class NoSelectOnTableByGroup extends SDPTestBase {
             conn1 = HiveConnection.getInstance().getAdminConnect();
             st1= conn1.createStatement();
 
-            String addgpusersql = HiveConnection.getInstance().alterSql("group",getConfig("testGroup"),"add","user", getConfig("testUser"));
+            String addgpusersql = HiveConnection.getInstance().alterUserSql(getConfig("testGroup"),"add",getConfig("testUser"));
             st1.executeQuery(addgpusersql);
 
             //测试用户test来验证管理员的语句
