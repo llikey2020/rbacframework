@@ -1,9 +1,0 @@
-com\sequoiadp\rbac\ddl\NoSelectOnTable.class
-com\sequoiadp\rbac\ddl\WithoutUsage.class
-com\sequoiadp\rbac\ddl\Groupselect.class
-com\sequoiadp\rbac\ddl\NoSelectOnTableByGroup.class
-com\sequoiadp\testcommon\HiveConnection.class
-com\sequoiadp\rbac\ddl\GrantModify.class
-com\sequoiadp\rbac\ddl\GrantSelect.class
-com\sequoiadp\rbac\ddl\CreateDatabase123.class
-com\sequoiadp\testcommon\SDPTestBase.class
