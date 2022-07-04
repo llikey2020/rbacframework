@@ -54,8 +54,8 @@ spark需要关闭鉴权 才能够通过jdbc连接到thriftserver
     
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-catalyst</artifactId>
-            <version>3.1.2</version>
+            <artifactId>spark-catalyst_2.13</artifactId>
+            <version>3.2.1</version>
         </dependency>
 
 #### 结构和功能
