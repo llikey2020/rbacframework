@@ -38,12 +38,15 @@ public abstract class SDPViewTestBase extends SDPTestBase {
         st = conn.createStatement();
         String usesql = "use " + getConfig("dbName") + ";" ;
         st.executeQuery(usesql);
+
+        String s3 = "s3a://sdbbucket2/" + tableName;
         //建表
-        String createtablsql = "create table if not exists " + tableName + "(id int,name varchar(20));";
+        String createtablsql = "create table if not exists " + tableName + "(id int)using delta location \"" + s3 + "\" " + ";" ;
         st.executeQuery(createtablsql);
         //插入数据
-        String insertsql = "insert into " + tableName + " values(1001,'swtshs');";
+        String insertsql = "insert into " + tableName + " values(1001);";
         st.executeQuery(insertsql);
+        
         if(hasUsage) {
             String grantDatabase = HiveConnection.getInstance().grantSql("usage","database",getConfig("dbName"),"user",getConfig("testUser"));
             st.executeQuery(grantDatabase);
