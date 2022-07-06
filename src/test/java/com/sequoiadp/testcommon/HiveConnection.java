@@ -25,6 +25,10 @@ public class HiveConnection {
     public Connection getTestConnect (){
         return getConnect(ParaBeen.getConfig("testUser"),ParaBeen.getConfig("testPwd"));
     }
+    
+    public Connection getNonownerConnect (){
+        return getConnect(ParaBeen.getConfig("nonowner"),ParaBeen.getConfig("nonownerPwd"));
+    }
 
     public  Connection getConnect (String user,String pwd) {
         synchronized(lock) {

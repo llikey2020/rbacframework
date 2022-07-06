@@ -13,20 +13,28 @@ import org.testng.annotations.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
+
 
 public abstract class SDPTestBase {
     protected String tableName;
-    private boolean hasUsage=true;
-    private boolean hasGroup=false;
-    private Connection conn;
+    protected boolean hasUsage=true;
+    protected boolean hasGroup=false;
+    protected Connection conn;
 
 
     public void setTableName(String tablename){
         tableName=tablename;
     }
+    
+    
 
-    protected void notUsage(){
+    public String getTableName() {
+		return tableName;
+	}
+
+
+
+	protected void notUsage(){
         hasUsage=false;
     }
 
@@ -35,9 +43,9 @@ public abstract class SDPTestBase {
     }
 
     @Parameters({"HOSTNAME", "PORT", "ROOTUSER", "ROOTPWD", "TESTUSER",
-            "TESTPWD", "DBNAME", "TESTGROUP"})
+        "TESTPWD", "DBNAME", "TESTGROUP","NONOWNER","NONOWNERPWD"})
     @BeforeSuite(alwaysRun = true)
-    public static void initSuite(String HOSTNAME, String PORT, String ROOTUSER, String ROOTPWD, String TESTUSER, String TESTPWD, String DBNAME, String TESTGROUP) {
+    public static void initSuite(String HOSTNAME, String PORT, String ROOTUSER, String ROOTPWD, String TESTUSER, String TESTPWD, String DBNAME, String TESTGROUP,String NONOWNER,String NONOWNERPWD) {
         ParaBeen.setConfig("hostName",HOSTNAME);
         ParaBeen.setConfig("port",PORT);
         ParaBeen.setConfig("rootUser",ROOTUSER);
@@ -46,6 +54,8 @@ public abstract class SDPTestBase {
         ParaBeen.setConfig("testPwd",TESTPWD);
         ParaBeen.setConfig("dbName",DBNAME);
         ParaBeen.setConfig("testGroup",TESTGROUP);
+        ParaBeen.setConfig("nonowner",NONOWNER);
+        ParaBeen.setConfig("nonownerPwd",NONOWNERPWD);
         ParaBeen.setConfig("url","jdbc:hive2://" + HOSTNAME + ":" + PORT );
     }
 
