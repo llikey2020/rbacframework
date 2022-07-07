@@ -3,43 +3,49 @@
 <suite name="rbac" parallel="methods" thread-count="1" verbose="1">
 
     <!--ip地址，目标spark-thriftserver的IP地址-->
-<!--    <parameter name="HOSTNAME" value="192.168.16.75"/>-->
-<!--    &lt;!&ndash;thriftserver端口号，传入10000&ndash;&gt;-->
-<!--    <parameter name="PORT" value="10000"/>-->
-<!--    &lt;!&ndash;rbac管理员用户名&ndash;&gt;-->
-<!--    <parameter name="ROOTUSER" value="sequoiadb"/>-->
-<!--    &lt;!&ndash;rbac管理员用户密码&ndash;&gt;-->
-<!--    <parameter name="ROOTPWD" value="gsd4"/>-->
-<!--    &lt;!&ndash;rbac测试用户名&ndash;&gt;-->
-<!--    <parameter name="TESTUSER" value="sdbadmin"/>-->
-<!--    &lt;!&ndash;rbac测试用户密码&ndash;&gt;-->
-<!--    <parameter name="TESTPWD" value="asfdsg"/>-->
-<!--    &lt;!&ndash;测试数据库名字&ndash;&gt;-->
-<!--    <parameter name="DBNAME" value="testdb"/>-->
-<!--    &lt;!&ndash;测试group名字&ndash;&gt;-->
-<!--    <parameter name="TESTGROUP" value="group1"/>-->
-
-
-
-    <parameter name="HOSTNAME" value="${HOSTNAME}"/>
+    <parameter name="HOSTNAME" value="192.168.4.157"/>
     <!--thriftserver端口号，传入10000-->
-    <parameter name="PORT" value="${PORT}"/>
+    <parameter name="PORT" value="10000"/>
     <!--rbac管理员用户名-->
-    <parameter name="ROOTUSER" value="${ROOTUSER}"/>
+    <parameter name="ROOTUSER" value="sdbadmin"/>
     <!--rbac管理员用户密码-->
-    <parameter name="ROOTPWD" value="${ROOTPWD}"/>
+    <parameter name="ROOTPWD" value="gsd4"/>
     <!--rbac测试用户名-->
-    <parameter name="TESTUSER" value="${TESTUSER}"/>
+    <parameter name="TESTUSER" value="test"/>
     <!--rbac测试用户密码-->
-    <parameter name="TESTPWD" value="${TESTPWD}"/>
+    <parameter name="TESTPWD" value="asfdsg"/>
     <!--测试数据库名字-->
-    <parameter name="DBNAME" value="${DBNAME}"/>
+    <parameter name="DBNAME" value="testdb"/>
     <!--测试group名字-->
-    <parameter name="TESTGROUP" value="${TESTGROUP}"/>
+    <parameter name="TESTGROUP" value="group1"/>
+    <!--测试所需的S3桶名字-->
+    <parameter name="S3BUCKET" value="sdbbucket"></parameter>
+
+
+
+<!--    <parameter name="HOSTNAME" value="${HOSTNAME}"/>-->
+<!--    &lt;!&ndash;thriftserver端口号，传入10000&ndash;&gt;-->
+<!--    <parameter name="PORT" value="${PORT}"/>-->
+<!--    &lt;!&ndash;rbac管理员用户名&ndash;&gt;-->
+<!--    <parameter name="ROOTUSER" value="${ROOTUSER}"/>-->
+<!--    &lt;!&ndash;rbac管理员用户密码&ndash;&gt;-->
+<!--    <parameter name="ROOTPWD" value="${ROOTPWD}"/>-->
+<!--    &lt;!&ndash;rbac测试用户名&ndash;&gt;-->
+<!--    <parameter name="TESTUSER" value="${TESTUSER}"/>-->
+<!--    &lt;!&ndash;rbac测试用户密码&ndash;&gt;-->
+<!--    <parameter name="TESTPWD" value="${TESTPWD}"/>-->
+<!--    &lt;!&ndash;测试数据库名字&ndash;&gt;-->
+<!--    <parameter name="DBNAME" value="${DBNAME}"/>-->
+<!--    &lt;!&ndash;测试group名字&ndash;&gt;-->
+<!--    <parameter name="TESTGROUP" value="${TESTGROUP}"/>-->
+<!--    &lt;!&ndash;测试所需的S3桶名字&ndash;&gt;-->
+<!--    <parameter name="S3BUCKET" value="${S3BUCKET}"></parameter>-->
 
     <test name="rbac">
         <packages>
-                <package name="com.sequoiadp.rbac.ddl"></package>
+            <package name="com.sequoiadp.rbac.ownership"></package>
+            <package name="com.sequoiadp.rbac.group"></package>
+            <package name="com.sequoiadp.rbac.show"></package>
         </packages>
 
     </test>

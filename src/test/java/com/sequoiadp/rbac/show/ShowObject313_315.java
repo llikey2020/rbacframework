@@ -2,6 +2,7 @@ package com.sequoiadp.rbac.show;
 
 import com.sequoiadp.testcommon.HiveConnection;
 import com.sequoiadp.testcommon.ParaBeen;
+import com.sequoiadp.testcommon.TestBase;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -11,7 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ShowObject_313_315 {
+public class ShowObject313_315 extends TestBase {
     private Connection adminConn, testConn;
     private Statement adminStmt, testStmt;
 
@@ -24,24 +25,25 @@ public class ShowObject_313_315 {
 
         String s3 = "s3a://"+ ParaBeen.getConfig("S3Bucket")+'/' ;
 
-        adminStmt.execute("create database showobj");
-        adminStmt.execute("create table showobj.t1(id int) using delta location "+s3+"showt1");
+        adminStmt.execute("create database if not exists showobj");
+        adminStmt.execute("create table showobj.t1(id int) using delta location \""+s3+"showt1\"");
         adminStmt.execute("create view showobj.v1 as select * from showobj.t1");
+        adminStmt.execute("grant usage on database showobj to user "+ParaBeen.getConfig("testUser"));
     }
 
     @Test
     public void test_313() throws SQLException {
         String show="show create table showobj.t1",
-                tempgrant="grant read_metadata on table showobj.t1 to user test";
+                tempgrant="grant read_metadata on table showobj.t1 to user "+ParaBeen.getConfig("testUser");
         adminStmt.execute(tempgrant);
         Assert.assertThrows(SQLException.class, () -> {
             testStmt.execute(show);
         });
     }
 
-    @Test
+    @Test(skipFailedInvocations = true)
     public void test_314() throws SQLException {
-        String show="show create database showobj";
+        String show="show databases ";
         testStmt.execute(show);
     }
 

@@ -43,9 +43,10 @@ public abstract class SDPTestBase {
     }
 
     @Parameters({"HOSTNAME", "PORT", "ROOTUSER", "ROOTPWD", "TESTUSER",
-        "TESTPWD", "DBNAME", "TESTGROUP","NONOWNER","NONOWNERPWD"})
+            "TESTPWD", "DBNAME", "TESTGROUP","NONOWNER","NONOWNERPWD","S3BUCKET"})
     @BeforeSuite(alwaysRun = true)
-    public static void initSuite(String HOSTNAME, String PORT, String ROOTUSER, String ROOTPWD, String TESTUSER, String TESTPWD, String DBNAME, String TESTGROUP,String NONOWNER,String NONOWNERPWD) {
+    public static void initSuite(String HOSTNAME, String PORT, String ROOTUSER, String ROOTPWD,
+                                 String TESTUSER, String TESTPWD, String DBNAME, String TESTGROUP,String NONOWNER,String NONOWNERPWD,String S3BUCKET) {
         ParaBeen.setConfig("hostName",HOSTNAME);
         ParaBeen.setConfig("port",PORT);
         ParaBeen.setConfig("rootUser",ROOTUSER);
@@ -57,6 +58,7 @@ public abstract class SDPTestBase {
         ParaBeen.setConfig("nonowner",NONOWNER);
         ParaBeen.setConfig("nonownerPwd",NONOWNERPWD);
         ParaBeen.setConfig("url","jdbc:hive2://" + HOSTNAME + ":" + PORT );
+        ParaBeen.setConfig("S3Bucket",S3BUCKET);
     }
 
     public static String getConfig(String key){

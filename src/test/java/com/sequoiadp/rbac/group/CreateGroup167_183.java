@@ -1,7 +1,9 @@
 package com.sequoiadp.rbac.group;
 
+import com.sequoiadp.testcommon.GeneralComparison;
 import com.sequoiadp.testcommon.HiveConnection;
 import com.sequoiadp.testcommon.ParaBeen;
+import com.sequoiadp.testcommon.TestBase;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -12,9 +14,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 @Test(groups = "group")
-public class CreateGroup_167_183 {
+public class CreateGroup167_183 extends TestBase {
     private Connection adminConn, testConn;
     private Statement adminStmt, testStmt;
+    private String groupname="dev",normalCreate="create group "+groupname,normalDrop="drop group "+groupname;
 
     @BeforeClass
     public void initConn() throws SQLException {
@@ -22,11 +25,15 @@ public class CreateGroup_167_183 {
         adminStmt = adminConn.createStatement();
         testConn = HiveConnection.getInstance().getTestConnect();
         testStmt = testConn.createStatement();
+        try {
+            runGroupTestByAdmin(normalDrop);
+        } catch (SQLException e){
+            //如果不能删除group视为无事发生
+        }
     }
 
     public void test_167() throws SQLException {
-        String sql1 = "create group dev", sql2 = "drop group dev";
-        runGroupTestByAdmin(sql1, sql2);
+        runGroupTestByAdmin(normalCreate, normalDrop);
     }
 
     public void test_168() throws SQLException {
@@ -42,8 +49,8 @@ public class CreateGroup_167_183 {
     public void test_171() {
         String sql1 = "create group dev", sql2 = "drop group dev";
         Assert.assertThrows(SQLException.class, () -> {
-            runGroupTestByUser(sql1);
-            runGroupTestByAdmin(sql2);
+            runGroupTestByUser(normalCreate);
+            runGroupTestByAdmin(normalDrop);
         });
     }
 
@@ -81,6 +88,22 @@ public class CreateGroup_167_183 {
             adminStmt.execute(sql2);
         });
     }
+    public void test_180_181() throws SQLException {
+        String sql1 = "create group dev", sql2="grant all on database default to user "+ParaBeen.getConfig("testUser"),
+                sql3 = "drop group dev",sql4="show grants for group dev",sql5="show grants for user "+ParaBeen.getConfig("testUser"),
+        clean="revoke all on database default from user "+ParaBeen.getConfig("testUser");
+        String[] array={"grant all on database default to group dev",
+        "grant usage on database default to group dev",
+        "grant create on database aaa to group dev"};
+        runGroupTestByAdmin(sql1);
+        runGroupTestByAdmin(sql2);
+        runGroupTestByAdmin(array);
+
+        runGroupTestByAdmin(sql3);
+        Assert.assertEquals(adminStmt.executeQuery(sql4).next(),false);
+        GeneralComparison.findInResult(adminStmt.executeQuery(sql5), new int[]{3, 4}, new String[]{"/default/", "ALL"});
+        runGroupTestByAdmin(clean);
+    }
 
     public void test_182() throws SQLException {
         String sql1 = "create group dev", sql2 = "drop groups dev";
@@ -88,7 +111,7 @@ public class CreateGroup_167_183 {
         Assert.assertThrows(SQLException.class, () -> {
             runGroupTestByUser(sql2);
         });
-        runGroupTestByAdmin(sql2);
+        runGroupTestByAdmin("drop group dev");
     }
 
     public void test_183() throws SQLException {
