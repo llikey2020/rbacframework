@@ -10,19 +10,20 @@ import com.sequoiadp.testcommon.HiveConnection;
 import com.sequoiadp.testcommon.SDPTestBase;
 
 /*
- * @Description   : GRANT CREATE ON VIEW TO USER
+ * @Description   : GRANT CREATE ON VIEW TO GROUP syntax validation
  * @Author        : Lena
  */
-public class GrantCreateOnViewSdp_222 extends SDPTestBase {
+public class GrantCreateOnViewGroupSyntaxSdp_374 extends SDPTestBase {
 
-	public GrantCreateOnViewSdp_222() {
+	public GrantCreateOnViewGroupSyntaxSdp_374() {
 		super.setTableName("tablea");
+		super.hasGroup();
 	}
 
 	public static final String VIEWNAME = "newviewname";
 
-//测试点
-	@Test
+	//测试点
+	@Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*Operation not allowed.*")
 	public void test() throws SQLException {
 		Connection conn1 = null, conn2 = null;
 		Statement st1 = null, st2 = null;
@@ -32,12 +33,15 @@ public class GrantCreateOnViewSdp_222 extends SDPTestBase {
 			st1 = conn1.createStatement();
 			String usagesql = HiveConnection.getInstance().usageSql(getConfig("dbName"));
 			st1.executeQuery(usagesql);
-
+			
+            String addgpusersql = HiveConnection.getInstance().alterUserSql(getConfig("testGroup"),"add", getConfig("testUser"));
+            st1.executeQuery(addgpusersql);
+			
             String grantsql = HiveConnection.getInstance().grantSql("select","table",tableName,"user",getConfig("testUser"));
             st1.executeQuery(grantsql);
             
-			String grantsqlview = HiveConnection.getInstance().grantSql("create", "view", VIEWNAME, "user",
-					getConfig("testUser"));
+			String grantsqlview = HiveConnection.getInstance().grantSql("creates", "view", VIEWNAME, "group",
+					getConfig("testGroup"));
 			st1.executeQuery(grantsqlview);
 
 			// 测试用户test来验证管理员的语句
@@ -57,10 +61,10 @@ public class GrantCreateOnViewSdp_222 extends SDPTestBase {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			st1.close();
-			st2.close();
-			conn1.close();
-			conn2.close();
+            st1.close();
+            if(st2 != null) st2.close();
+            conn1.close();
+            if(conn2 != null) conn2.close();
 		}
 	}
 }

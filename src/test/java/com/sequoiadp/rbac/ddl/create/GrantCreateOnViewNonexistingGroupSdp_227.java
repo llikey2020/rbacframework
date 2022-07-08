@@ -8,18 +8,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /*
- * @Description   : GRANT CREATE ON TABLE TO GROUP <non existing group name>
+ * @Description   : GRANT CREATE ON VIEW TO GROUP <non existing group name>
  * @Author        : Lena
  */
 
-public class GrantCreateOnTableNonexistingGroupSdp_218 extends SDPTestBase {
-    public GrantCreateOnTableNonexistingGroupSdp_218() {
-        super.hasGroup();
-    }
-   
-    public static final String TABLENAME = "newtablename";
+public class GrantCreateOnViewNonexistingGroupSdp_227 extends SDPTestBase {
+	
+	public GrantCreateOnViewNonexistingGroupSdp_227() {
+		super.setTableName("tablea");
+		super.hasGroup();
+	}
+
+	public static final String VIEWNAME = "newviewname";
     //测试点
-    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*Operation not allowed.*")
+    @Test
     public void test() throws SQLException {
         Connection conn1 = null;
         Statement st1 = null;
@@ -29,8 +31,11 @@ public class GrantCreateOnTableNonexistingGroupSdp_218 extends SDPTestBase {
             st1= conn1.createStatement();
             String usagesql = HiveConnection.getInstance().usageSql(getConfig("dbName"));
             st1.executeQuery(usagesql);
-            String grantsql = HiveConnection.getInstance().grantSql("create","table",TABLENAME,"group","nonexistinggroup");
-            st1.executeQuery(grantsql);
+            String grantsqlselect = HiveConnection.getInstance().grantSql("select","table",tableName,"user",getConfig("testUser"));
+            st1.executeQuery(grantsqlselect);           
+			String grantsqlview = HiveConnection.getInstance().grantSql("create", "view", VIEWNAME, "group",
+					"nonexistinggroup");
+			st1.executeQuery(grantsqlview);
         } catch ( SQLException e) {
             e.printStackTrace();
             throw e;

@@ -10,19 +10,20 @@ import com.sequoiadp.testcommon.HiveConnection;
 import com.sequoiadp.testcommon.SDPTestBase;
 
 /*
- * @Description   : GRANT CREATE ON VIEW TO USER
+ * @Description   : GRANT CREATE ON VIEW without granting usage to members of the group
  * @Author        : Lena
  */
-public class GrantCreateOnViewSdp_222 extends SDPTestBase {
+public class GrantCreateOnViewWithoutUsageGroupSdp_230 extends SDPTestBase {
 
-	public GrantCreateOnViewSdp_222() {
+	public GrantCreateOnViewWithoutUsageGroupSdp_230() {
 		super.setTableName("tablea");
+        super.notUsage();
 	}
 
 	public static final String VIEWNAME = "newviewname";
 
-//测试点
-	@Test
+	//测试点
+	@Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*does not have USAGE privilege on.*")
 	public void test() throws SQLException {
 		Connection conn1 = null, conn2 = null;
 		Statement st1 = null, st2 = null;
@@ -43,10 +44,7 @@ public class GrantCreateOnViewSdp_222 extends SDPTestBase {
 			// 测试用户test来验证管理员的语句
 			conn2 = HiveConnection.getInstance().getTestConnect();
 			st2 = conn2.createStatement();
-			
-			String testusagesql = HiveConnection.getInstance().usageSql(getConfig("dbName"));
-			st2.executeQuery(testusagesql);
-			
+					
 			String viewsql = "create view " + VIEWNAME + " as select * from " + tableName;
 			st2.executeQuery(viewsql);
 

@@ -15,6 +15,7 @@ import java.sql.Statement;
 public class GrantCreateOnTableWithoutUsageGroupSdp_221 extends SDPTestBase {
     public GrantCreateOnTableWithoutUsageGroupSdp_221() {
         super.notUsage();
+        super.hasGroup();
     }
     
     public static final String TABLENAME = "newtablename";

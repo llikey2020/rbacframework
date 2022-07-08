@@ -10,13 +10,15 @@ import com.sequoiadp.testcommon.HiveConnection;
 import com.sequoiadp.testcommon.SDPTestBase;
 
 /*
- * @Description   : GRANT CREATE ON VIEW TO USER
+ * @Description   : GRANT CREATE ON VIEW TO GROUP
  * @Author        : Lena
  */
-public class GrantCreateOnViewSdp_222 extends SDPTestBase {
 
-	public GrantCreateOnViewSdp_222() {
+public class GrantCreateOnViewGroupSdp_223 extends SDPTestBase {
+
+	public GrantCreateOnViewGroupSdp_223() {
 		super.setTableName("tablea");
+		super.hasGroup();
 	}
 
 	public static final String VIEWNAME = "newviewname";
@@ -32,12 +34,15 @@ public class GrantCreateOnViewSdp_222 extends SDPTestBase {
 			st1 = conn1.createStatement();
 			String usagesql = HiveConnection.getInstance().usageSql(getConfig("dbName"));
 			st1.executeQuery(usagesql);
+			
+            String addgpusersql = HiveConnection.getInstance().alterUserSql(getConfig("testGroup"),"add", getConfig("testUser"));
+            st1.executeQuery(addgpusersql);
 
             String grantsql = HiveConnection.getInstance().grantSql("select","table",tableName,"user",getConfig("testUser"));
             st1.executeQuery(grantsql);
             
-			String grantsqlview = HiveConnection.getInstance().grantSql("create", "view", VIEWNAME, "user",
-					getConfig("testUser"));
+			String grantsqlview = HiveConnection.getInstance().grantSql("create", "view", VIEWNAME, "group",
+					getConfig("testGroup"));
 			st1.executeQuery(grantsqlview);
 
 			// 测试用户test来验证管理员的语句

@@ -10,19 +10,19 @@ import com.sequoiadp.testcommon.HiveConnection;
 import com.sequoiadp.testcommon.SDPTestBase;
 
 /*
- * @Description   : GRANT CREATE ON VIEW TO USER
+ * @Description   : GRANT CREATE ON VIEW TO USER syntax validation
  * @Author        : Lena
  */
-public class GrantCreateOnViewSdp_222 extends SDPTestBase {
+public class GrantCreateOnViewSyntaxSdp_228 extends SDPTestBase {
 
-	public GrantCreateOnViewSdp_222() {
+	public GrantCreateOnViewSyntaxSdp_228() {
 		super.setTableName("tablea");
 	}
 
 	public static final String VIEWNAME = "newviewname";
 
-//测试点
-	@Test
+	//测试点
+	@Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*Operation not allowed.*")
 	public void test() throws SQLException {
 		Connection conn1 = null, conn2 = null;
 		Statement st1 = null, st2 = null;
@@ -36,7 +36,7 @@ public class GrantCreateOnViewSdp_222 extends SDPTestBase {
             String grantsql = HiveConnection.getInstance().grantSql("select","table",tableName,"user",getConfig("testUser"));
             st1.executeQuery(grantsql);
             
-			String grantsqlview = HiveConnection.getInstance().grantSql("create", "view", VIEWNAME, "user",
+			String grantsqlview = HiveConnection.getInstance().grantSql("creates", "view", VIEWNAME, "user",
 					getConfig("testUser"));
 			st1.executeQuery(grantsqlview);
 
@@ -57,10 +57,10 @@ public class GrantCreateOnViewSdp_222 extends SDPTestBase {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			st1.close();
-			st2.close();
-			conn1.close();
-			conn2.close();
+            st1.close();
+            if(st2 != null) st2.close();
+            conn1.close();
+            if(conn2 != null) conn2.close();
 		}
 	}
 }
