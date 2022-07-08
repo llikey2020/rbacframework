@@ -8,15 +8,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /*
- * @Description   : GRANT CREATE ON TABLE to USER
+ * @Description   : GRANT CREATE ON TABLE without USER keyword
  * @Author        : Lena
  */
 
-public class GrantCreateOnTableSdp_213 extends SDPTestBase {
+public class GrantCreateOnTableWithoutKeywordUserSdp_215 extends SDPTestBase {
     
     public static final String TABLENAME = "newtablename";
     //测试点
-    @Test
+    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*Operation not allowed.*")
     public void test() throws SQLException {
         Connection conn1 = null,conn2 = null;
         Statement st1 = null,st2 = null;
@@ -26,7 +26,7 @@ public class GrantCreateOnTableSdp_213 extends SDPTestBase {
             st1= conn1.createStatement();
             String usagesql = HiveConnection.getInstance().usageSql(getConfig("dbName"));
             st1.executeQuery(usagesql);           
-            String grantsql = HiveConnection.getInstance().grantSql("create","table",TABLENAME,"user",getConfig("testUser"));
+            String grantsql = HiveConnection.getInstance().grantSql("create","table",TABLENAME,"",getConfig("testUser"));
             st1.executeQuery(grantsql);
             
             //测试用户test来验证管理员的语句
@@ -46,9 +46,9 @@ public class GrantCreateOnTableSdp_213 extends SDPTestBase {
             throw e;
         }finally {
             st1.close();
-            st2.close();
+            if(st2 != null) st2.close();
             conn1.close();
-            conn2.close();
+            if(conn2 != null) conn2.close();
         }
     }
 }

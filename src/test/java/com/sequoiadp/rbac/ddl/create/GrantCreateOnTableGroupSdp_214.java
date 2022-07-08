@@ -8,11 +8,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /*
- * @Description   : GRANT CREATE ON TABLE to USER
+ * @Description   : GRANT CREATE ON TABLE to GROUP
  * @Author        : Lena
  */
 
-public class GrantCreateOnTableSdp_213 extends SDPTestBase {
+public class GrantCreateOnTableGroupSdp_214 extends SDPTestBase {
+    public GrantCreateOnTableGroupSdp_214() {
+        super.hasGroup();
+    }
     
     public static final String TABLENAME = "newtablename";
     //测试点
@@ -25,10 +28,14 @@ public class GrantCreateOnTableSdp_213 extends SDPTestBase {
             conn1 = HiveConnection.getInstance().getAdminConnect();
             st1= conn1.createStatement();
             String usagesql = HiveConnection.getInstance().usageSql(getConfig("dbName"));
-            st1.executeQuery(usagesql);           
-            String grantsql = HiveConnection.getInstance().grantSql("create","table",TABLENAME,"user",getConfig("testUser"));
-            st1.executeQuery(grantsql);
+            st1.executeQuery(usagesql); 
             
+            String addgpusersql = HiveConnection.getInstance().alterUserSql(getConfig("testGroup"),"add", getConfig("testUser"));
+            st1.executeQuery(addgpusersql);
+
+            String grantsql = HiveConnection.getInstance().grantSql("create","table",TABLENAME,"group",getConfig("testGroup"));
+            st1.executeQuery(grantsql);
+                        
             //测试用户test来验证管理员的语句
             conn2 = HiveConnection.getInstance().getTestConnect();
             st2 = conn2.createStatement();
