@@ -1,24 +1,26 @@
-package com.sequoiadp.rbac.ddl.create;
+package com.sequoiadp.rbac.ddl.all;
+
 import com.sequoiadp.testcommon.HiveConnection;
-import com.sequoiadp.testcommon.SDPTestBase;
+import com.sequoiadp.testcommon.SDPViewTestBase;
 import org.testng.annotations.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 /*
- * @Description   : GRANT CREATE ON TABLE TO GROUP syntax validation
+ * @Description   : GRANT ALL ON VIEW without granting usage to members of the group
  * @Author        : Lena
  */
 
-public class GrantCreateOnTableGroupSyntaxSdp_373 extends SDPTestBase {
-    public GrantCreateOnTableGroupSyntaxSdp_373() {
+public class GrantAllOnViewWithoutUsageGroupSdp_285 extends SDPViewTestBase {
+    public GrantAllOnViewWithoutUsageGroupSdp_285() {
+        super.setTableName("tablea");
+        super.setViewName(this.getTableName() + "_vIew");
         super.hasGroup();
+        super.notUsage();
     }
-	
-    public static final String TABLENAME = "newtablename";
     //测试点
-    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*Operation not allowed.*")
+    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*does not have usage privilege on.*")
     public void test() throws SQLException {
         Connection conn1 = null,conn2 = null;
         Statement st1 = null,st2 = null;
@@ -30,21 +32,18 @@ public class GrantCreateOnTableGroupSyntaxSdp_373 extends SDPTestBase {
             st1.executeQuery(usagesql);
             String addgpusersql = HiveConnection.getInstance().alterUserSql(getConfig("testGroup"),"add", getConfig("testUser"));
             st1.executeQuery(addgpusersql);
-            String grantsqltable = HiveConnection.getInstance().grantSql("creates","table",TABLENAME,"group",getConfig("testGroup"));
-            st1.executeQuery(grantsqltable);
+            String grantsqlview = HiveConnection.getInstance().grantSql("all","view",viewName,"group",getConfig("testGroup"));
+            st1.executeQuery(grantsqlview);
             
             //测试用户test来验证管理员的语句
             conn2 = HiveConnection.getInstance().getTestConnect();
-            st2 = conn2.createStatement();
-  
-            String s3 = "s3a://sdbbucket2/" + TABLENAME;
-            //建表
-            String createtablesql = "create table " + getConfig("dbName") + "." + TABLENAME + " (id int)using delta location \"" + s3 + "\" " + ";" ;
-            st2.executeQuery(createtablesql);
+            st2 = conn2.createStatement();;
+
+           st2.executeQuery(usagesql);
             
-            String droptablesql = HiveConnection.getInstance().dropSql("table",getConfig("dbName") + "." + TABLENAME );
-            st1.executeQuery(droptablesql);
-                      
+            String selectsql = HiveConnection.getInstance().selectTv(getConfig("dbName"),viewName);
+            st2.executeQuery(selectsql);
+
         } catch ( SQLException e) {
             e.printStackTrace();
             throw e;
@@ -56,5 +55,3 @@ public class GrantCreateOnTableGroupSyntaxSdp_373 extends SDPTestBase {
         }
     }
 }
-
-

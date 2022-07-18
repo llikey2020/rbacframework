@@ -1,27 +1,24 @@
-package com.sequoiadp.rbac.ddl.create;
+package com.sequoiadp.rbac.ddl.read_metadata;
 
 import com.sequoiadp.testcommon.HiveConnection;
 import com.sequoiadp.testcommon.SDPTestBase;
 import org.testng.annotations.Test;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 /*
- * @Description   : GRANT CREATE ON VIEW TO GROUP <non existing group name>
+ * @Description   : GRANT READ_METADATA ON DATABASE to <non existing username>
  * @Author        : Lena
  */
 
-public class GrantCreateOnViewNonexistingGroupSdp_227 extends SDPTestBase {
-	
-	public GrantCreateOnViewNonexistingGroupSdp_227() {
-		super.setTableName("tablea");
-		super.hasGroup();
-	}
-
-	public static final String VIEWNAME = "newviewname";
+public class GrantRead_metadataOnDBToNonexistingUserSdp_312_A extends SDPTestBase {
+    public GrantRead_metadataOnDBToNonexistingUserSdp_312_A() {
+        super.setTableName("tablea");
+    }
     //测试点
-	@Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*Operation not allowed.*")
+    @Test
     public void test() throws SQLException {
         Connection conn1 = null;
         Statement st1 = null;
@@ -31,11 +28,11 @@ public class GrantCreateOnViewNonexistingGroupSdp_227 extends SDPTestBase {
             st1= conn1.createStatement();
             String usagesql = HiveConnection.getInstance().usageSql(getConfig("dbName"));
             st1.executeQuery(usagesql);
-            String grantsqlselect = HiveConnection.getInstance().grantSql("select","table",tableName,"user",getConfig("testUser"));
-            st1.executeQuery(grantsqlselect);           
-			String grantsqlview = HiveConnection.getInstance().grantSql("create", "view", VIEWNAME, "group",
-					"nonexistinggroup");
-			st1.executeQuery(grantsqlview);
+            String grantsql = HiveConnection.getInstance().grantSql("read_metadata","database",getConfig("dbName"),"user","nonexistinguser");
+            st1.executeQuery(grantsql);
+            //测试用户test来验证管理员的语句
+
+
         } catch ( SQLException e) {
             e.printStackTrace();
             throw e;
@@ -45,4 +42,3 @@ public class GrantCreateOnViewNonexistingGroupSdp_227 extends SDPTestBase {
         }
     }
 }
-
