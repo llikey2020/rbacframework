@@ -1,9 +1,7 @@
-package com.sequoiadp.rbac.ddl.view;
-
+package com.sequoiadp.rbac.ddl.read_metadata;
 
 import com.sequoiadp.testcommon.HiveConnection;
 import com.sequoiadp.testcommon.SDPViewTestBase;
-
 import org.testng.annotations.Test;
 
 import java.sql.Connection;
@@ -11,18 +9,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /*
- * @Description   : sequoiadb grant testuser select privilege on a view to test and verify
+ * @Description   : EXPLAIN statement without read_metadata privilege ON view (user)
  * @Author        : Lena
  */
 
-public class GrantSelectOnViewGroupSdp_195 extends SDPViewTestBase {
-    public GrantSelectOnViewGroupSdp_195() {
+public class ExplainWithoutRead_metadataOnViewUserSdp_318_C extends SDPViewTestBase {
+    public ExplainWithoutRead_metadataOnViewUserSdp_318_C() {
         super.setTableName("tablea");
-        super.setViewName(this.getTableName() + "_view");
-        super.hasGroup();
+        super.setViewName(this.getTableName() + "_vIew");
     }
+	
     //测试点
-    @Test
+    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*xxxxxxxxx.*")
     public void test() throws SQLException {
         Connection conn1 = null,conn2 = null;
         Statement st1 = null,st2 = null;
@@ -32,18 +30,16 @@ public class GrantSelectOnViewGroupSdp_195 extends SDPViewTestBase {
             st1= conn1.createStatement();
             String usagesql = HiveConnection.getInstance().usageSql(getConfig("dbName"));
             st1.executeQuery(usagesql);
-            
-            String addgpusersql = HiveConnection.getInstance().alterUserSql(getConfig("testGroup"),"add", getConfig("testUser"));
-            st1.executeQuery(addgpusersql);
-            
-            String grantsqlview = HiveConnection.getInstance().grantSql("select","view",viewName,"group",getConfig("testGroup"));
-            st1.executeQuery(grantsqlview);
-            
+            String grantsqltable = HiveConnection.getInstance().grantSql("select","table",tableName,"user",getConfig("testUser"));
+            st1.executeQuery(grantsqltable);
+
             //测试用户test来验证管理员的语句
+            String selectsqlview = HiveConnection.getInstance().selectTv(getConfig("dbName"),viewName);
             conn2 = HiveConnection.getInstance().getTestConnect();
-            st2 = conn2.createStatement();
-            String selectsql = HiveConnection.getInstance().selectTv(getConfig("dbName"),viewName);
-            st2.executeQuery(selectsql);
+            st2 = conn2.createStatement();   
+            st2.executeQuery(usagesql);
+            String explainsql = "explain " + selectsqlview;
+            st2.executeQuery(explainsql);
 
         } catch ( SQLException e) {
             e.printStackTrace();

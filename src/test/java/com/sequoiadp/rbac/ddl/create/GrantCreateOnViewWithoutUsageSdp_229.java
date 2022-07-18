@@ -10,12 +10,12 @@ import com.sequoiadp.testcommon.HiveConnection;
 import com.sequoiadp.testcommon.SDPTestBase;
 
 /*
- * @Description   : GRANT CREATE ON VIEW without granting usage to members of the group
+ * @Description   : GRANT CREATE ON VIEW without granting usage to user
  * @Author        : Lena
  */
-public class GrantCreateOnViewWithoutUsageGroupSdp_230 extends SDPTestBase {
+public class GrantCreateOnViewWithoutUsageSdp_229 extends SDPTestBase {
 
-	public GrantCreateOnViewWithoutUsageGroupSdp_230() {
+	public GrantCreateOnViewWithoutUsageSdp_229() {
 		super.setTableName("tablea");
         super.notUsage();
 	}
@@ -33,15 +33,12 @@ public class GrantCreateOnViewWithoutUsageGroupSdp_230 extends SDPTestBase {
 			st1 = conn1.createStatement();
 			String usagesql = HiveConnection.getInstance().usageSql(getConfig("dbName"));
 			st1.executeQuery(usagesql);
-			
-            String addgpusersql = HiveConnection.getInstance().alterUserSql(getConfig("testGroup"),"add", getConfig("testUser"));
-            st1.executeQuery(addgpusersql);
 
             String grantsql = HiveConnection.getInstance().grantSql("select","table",tableName,"user",getConfig("testUser"));
             st1.executeQuery(grantsql);
             
-			String grantsqlview = HiveConnection.getInstance().grantSql("create", "view", VIEWNAME, "group",
-					getConfig("testGroup"));
+			String grantsqlview = HiveConnection.getInstance().grantSql("create", "view", VIEWNAME, "user",
+					getConfig("testUser"));
 			st1.executeQuery(grantsqlview);
 
 			// 测试用户test来验证管理员的语句
