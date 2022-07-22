@@ -16,12 +16,12 @@ import java.sql.Statement;
 public class ExplainWithoutRead_metadataOnViewGroupSdp_318_D extends SDPViewTestBase {
     public ExplainWithoutRead_metadataOnViewGroupSdp_318_D() {
         super.setTableName("tablea");
-        super.setViewName(this.getTableName() + "_vIew");
+        super.setViewName(this.getTableName() + "_view");
         super.hasGroup();
     }
 	
     //测试点
-    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*xxxxxxxxx.*")
+    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*does not have read_metadata privilege.*")
     public void test() throws SQLException {
         Connection conn1 = null,conn2 = null;
         Statement st1 = null,st2 = null;

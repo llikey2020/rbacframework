@@ -15,7 +15,7 @@ import java.sql.Statement;
 public class GrantAllOnViewWithoutUsageSdp_284 extends SDPViewTestBase {
     public GrantAllOnViewWithoutUsageSdp_284() {
         super.setTableName("tablea");
-        super.setViewName(this.getTableName() + "_vIew");
+        super.setViewName(this.getTableName() + "_view");
         super.notUsage();
     }
     //测试点

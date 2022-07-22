@@ -8,18 +8,20 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.testng.annotations.Test;
+
 /*
  * @Description   : GRANT READ_METADATA ON TABLE to <non existing group>
  * @Author        : Lena
  */
 
-public class GrantRead_MetadataOnTableNonexistingGroupSdp_306_B extends SDPTestBase {
-    public GrantRead_MetadataOnTableNonexistingGroupSdp_306_B() {
+public class GrantRead_metadataOnTableNonexistingGroupSdp_306_B extends SDPTestBase {
+    public GrantRead_metadataOnTableNonexistingGroupSdp_306_B() {
         super.setTableName("tablea");
         super.hasGroup();
     }
     //测试点
-
+    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*update message once issue is fixed.*")
     public void test() throws SQLException {
         Connection conn1 = null;
         Statement st1 = null;

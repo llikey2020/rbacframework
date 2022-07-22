@@ -33,6 +33,8 @@ public abstract class SDPViewTestBase extends SDPTestBase {
     @BeforeClass
     @Override
     public void setup() throws SQLException {
+    	this.recycle();
+    	this.cleanandbuild();
         conn = HiveConnection.getInstance().getAdminConnect();
         Statement st ;
         st = conn.createStatement();

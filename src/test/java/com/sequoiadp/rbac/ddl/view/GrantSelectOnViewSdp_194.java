@@ -15,7 +15,7 @@ import java.sql.Statement;
 public class GrantSelectOnViewSdp_194 extends SDPViewTestBase {
     public GrantSelectOnViewSdp_194() {
         super.setTableName("tablea");
-        super.setViewName(this.getTableName() + "_vIew");
+        super.setViewName(this.getTableName() + "_view");
     }
     //测试点
     @Test

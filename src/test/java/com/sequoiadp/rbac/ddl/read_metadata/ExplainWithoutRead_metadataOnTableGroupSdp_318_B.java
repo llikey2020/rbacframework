@@ -19,9 +19,8 @@ public class ExplainWithoutRead_metadataOnTableGroupSdp_318_B extends SDPTestBas
         super.hasGroup();
     }
 	
-
     //测试点
-    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*xxxxxxxxx.*")
+    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*does not have read_metadata privilege.*")
     public void test() throws SQLException {
         Connection conn1 = null,conn2 = null;
         Statement st1 = null,st2 = null;

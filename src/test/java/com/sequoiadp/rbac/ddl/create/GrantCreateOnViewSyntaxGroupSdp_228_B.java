@@ -10,13 +10,14 @@ import com.sequoiadp.testcommon.HiveConnection;
 import com.sequoiadp.testcommon.SDPTestBase;
 
 /*
- * @Description   : GRANT CREATE ON VIEW TO USER syntax validation
+ * @Description   : GRANT CREATE ON VIEW TO GROUP syntax validation
  * @Author        : Lena
  */
-public class GrantCreateOnViewSyntaxSdp_228 extends SDPTestBase {
+public class GrantCreateOnViewSyntaxGroupSdp_228_B extends SDPTestBase {
 
-	public GrantCreateOnViewSyntaxSdp_228() {
+	public GrantCreateOnViewSyntaxGroupSdp_228_B() {
 		super.setTableName("tablea");
+		super.hasGroup();
 	}
 
 	public static final String VIEWNAME = "newviewname";
@@ -33,6 +34,9 @@ public class GrantCreateOnViewSyntaxSdp_228 extends SDPTestBase {
 			String usagesql = HiveConnection.getInstance().usageSql(getConfig("dbName"));
 			st1.executeQuery(usagesql);
 
+            String addgpusersql = HiveConnection.getInstance().alterUserSql(getConfig("testGroup"),"add", getConfig("testUser"));
+            st1.executeQuery(addgpusersql);
+            
             String grantsql = HiveConnection.getInstance().grantSql("select","table",tableName,"user",getConfig("testUser"));
             st1.executeQuery(grantsql);
             

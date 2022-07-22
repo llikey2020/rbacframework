@@ -18,9 +18,8 @@ public class ExplainWithoutRead_metadataOnTableUserSdp_318_A extends SDPTestBase
         super.setTableName("tablea");
     }
 	
-
     //测试点
-    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*xxxxxxxxx.*")
+    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*does not have read_metadata privilege.*")
     public void test() throws SQLException {
         Connection conn1 = null,conn2 = null;
         Statement st1 = null,st2 = null;
@@ -36,11 +35,10 @@ public class ExplainWithoutRead_metadataOnTableUserSdp_318_A extends SDPTestBase
             //测试用户test来验证管理员的语句
             String selectsqltable = HiveConnection.getInstance().selectTv(getConfig("dbName"),tableName);
             conn2 = HiveConnection.getInstance().getTestConnect();
-            st2 = conn2.createStatement();       
-            st2.executeQuery(usagesql);
+            st2 = conn2.createStatement();      
             String explainsql = "explain " + selectsqltable;
             st2.executeQuery(explainsql);
-
+            
         } catch ( SQLException e) {
             e.printStackTrace();
             throw e;

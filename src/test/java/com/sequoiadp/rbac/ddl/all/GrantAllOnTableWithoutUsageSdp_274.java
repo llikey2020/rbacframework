@@ -1,9 +1,8 @@
 package com.sequoiadp.rbac.ddl.all;
 
 import com.sequoiadp.testcommon.HiveConnection;
-import com.sequoiadp.testcommon.SDPTestBase;
+import com.sequoiadp.testcommon.SDPTestCleanDBBase;
 import org.testng.annotations.Test;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,7 +12,7 @@ import java.sql.Statement;
  * @Author        : Lena
  */
 
-public class GrantAllOnTableWithoutUsageSdp_274 extends SDPTestBase {
+public class GrantAllOnTableWithoutUsageSdp_274 extends SDPTestCleanDBBase {
     public GrantAllOnTableWithoutUsageSdp_274() {
         super.setTableName("tablea");
         super.notUsage();
