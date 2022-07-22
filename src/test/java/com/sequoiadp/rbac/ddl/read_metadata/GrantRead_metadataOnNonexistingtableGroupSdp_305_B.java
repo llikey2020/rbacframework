@@ -19,7 +19,7 @@ public class GrantRead_metadataOnNonexistingtableGroupSdp_305_B extends SDPTestB
         super.hasGroup();
     }
     //测试点
-    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*.*")
+    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*update message once issue is fixed.*")
     public void test() throws SQLException {
         Connection conn1 = null,conn2 = null;
         Statement st1 = null,st2 = null;
@@ -33,13 +33,6 @@ public class GrantRead_metadataOnNonexistingtableGroupSdp_305_B extends SDPTestB
             st1.executeQuery(addgpusersql);
             String grantsql = HiveConnection.getInstance().grantSql("read_metadata","table","noexistingtable","group",getConfig("testGroup"));
             st1.executeQuery(grantsql);
-            //测试用户test来验证管理员的语句
-            conn2 = HiveConnection.getInstance().getTestConnect();
-            st2 = conn2.createStatement();
-            
-            String descsql = "desc table " + "noexistingtable";
-            st2.executeQuery(descsql);
-            
 
         } catch ( SQLException e) {
             e.printStackTrace();

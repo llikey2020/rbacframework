@@ -15,7 +15,7 @@ import java.sql.Statement;
 public class GrantAllOnViewWithoutUsageGroupSdp_285 extends SDPViewTestBase {
     public GrantAllOnViewWithoutUsageGroupSdp_285() {
         super.setTableName("tablea");
-        super.setViewName(this.getTableName() + "_vIew");
+        super.setViewName(this.getTableName() + "_view");
         super.hasGroup();
         super.notUsage();
     }

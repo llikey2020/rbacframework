@@ -18,10 +18,10 @@ public class GrantRead_metadataOnNonexistingDBUserSdp_311_A extends SDPTestBase 
         super.setTableName("tablea");
     }
     //测试点
-    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*Database name cannot be found in table name.*")
+    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*update message Database name cannot be found in table name.*")
     public void test() throws SQLException {
-        Connection conn1 = null,conn2 = null;
-        Statement st1 = null,st2 = null;
+        Connection conn1 = null;
+        Statement st1 = null;
         try {
             //管理员sequoiadb连接到thriftserver
             conn1 = HiveConnection.getInstance().getAdminConnect();
@@ -29,9 +29,7 @@ public class GrantRead_metadataOnNonexistingDBUserSdp_311_A extends SDPTestBase 
             String usagesql = HiveConnection.getInstance().usageSql(getConfig("dbName"));
             st1.executeQuery(usagesql);
             String grantsql = HiveConnection.getInstance().grantSql("read_metadata","database","nonexistingdb","user",getConfig("testUser"));
-            st1.executeQuery(grantsql);
-           
-
+            st1.executeQuery(grantsql);        
         } catch ( SQLException e) {
             e.printStackTrace();
             throw e;

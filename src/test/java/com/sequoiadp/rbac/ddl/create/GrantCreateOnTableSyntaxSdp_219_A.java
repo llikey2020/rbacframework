@@ -11,7 +11,7 @@ import java.sql.Statement;
  * @Author        : Lena
  */
 
-public class GrantCreateOnTableSyntaxSdp_219 extends SDPTestBase {
+public class GrantCreateOnTableSyntaxSdp_219_A extends SDPTestBase {
 	
     public static final String TABLENAME = "newtablename";
     //测试点

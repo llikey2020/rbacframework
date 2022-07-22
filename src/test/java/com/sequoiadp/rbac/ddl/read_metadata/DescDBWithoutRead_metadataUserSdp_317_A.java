@@ -16,7 +16,7 @@ import java.sql.Statement;
 public class DescDBWithoutRead_metadataUserSdp_317_A extends SDPTestBase {
 
     //测试点
-    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*xxxxxxxxx.*")
+    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*update message once issue fixed.*")
     public void test() throws SQLException {
         Connection conn1 = null,conn2 = null;
         Statement st1 = null,st2 = null;

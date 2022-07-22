@@ -11,8 +11,8 @@ import java.sql.Statement;
  * @Author        : Lena
  */
 
-public class GrantCreateOnTableGroupSyntaxSdp_373 extends SDPTestBase {
-    public GrantCreateOnTableGroupSyntaxSdp_373() {
+public class GrantCreateOnTableGroupSyntaxSdp_219_B extends SDPTestBase {
+    public GrantCreateOnTableGroupSyntaxSdp_219_B() {
         super.hasGroup();
     }
 	

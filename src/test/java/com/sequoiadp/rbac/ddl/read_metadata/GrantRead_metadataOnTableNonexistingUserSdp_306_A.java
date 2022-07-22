@@ -7,17 +7,19 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.testng.annotations.Test;
+
 /*
  * @Description   : GRANT READ_METADATA ON TABLE to <non existing username>
  * @Author        : Lena
  */
 
-public class GrantRead_MetadataOnTableNonexistingUserSdp_306_A extends SDPTestBase {
-    public GrantRead_MetadataOnTableNonexistingUserSdp_306_A() {
+public class GrantRead_metadataOnTableNonexistingUserSdp_306_A extends SDPTestBase {
+    public GrantRead_metadataOnTableNonexistingUserSdp_306_A() {
         super.setTableName("tablea");
     }
     //测试点
-
+    @Test
     public void test() throws SQLException {
         Connection conn1 = null;
         Statement st1 = null;
