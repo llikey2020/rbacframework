@@ -18,7 +18,7 @@ public class GrantCreateDBToGroupSdp_232 extends SDPTestBase {
     public GrantCreateDBToGroupSdp_232() {
         super.hasGroup();
     }
-    public static final String DBNAME = "newdbname";
+    public static final String DBNAME = "newdbname4";
     //测试点
     @Test
     public void test() throws SQLException {

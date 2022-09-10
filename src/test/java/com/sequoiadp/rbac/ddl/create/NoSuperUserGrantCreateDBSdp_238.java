@@ -14,7 +14,7 @@ import com.sequoiadp.testcommon.SDPTestBase;
  * @Author        : Lena
  */
 public class NoSuperUserGrantCreateDBSdp_238 extends SDPTestBase {
-    public static final String DBNAME = "newdbname";
+    public static final String DBNAME = "newdbname9";
     //测试点
     @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*does not have grant privilege on database.*")
     public void test() throws SQLException {

@@ -85,6 +85,8 @@ public class PrivilegeConcurrencyVerificationOwner_Sdp_363 extends SDPTestBase {
 			e.printStackTrace();
 			throw e;
 		} finally {
+            String dropdbsql = HiveConnection.getInstance().dropSql("database",DBNAME );
+            st1.executeQuery(dropdbsql);
 			st1.close();
 			st2.close();
 			st3.close();

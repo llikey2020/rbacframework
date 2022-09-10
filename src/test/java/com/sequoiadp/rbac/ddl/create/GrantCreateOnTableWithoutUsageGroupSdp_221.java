@@ -20,7 +20,7 @@ public class GrantCreateOnTableWithoutUsageGroupSdp_221 extends SDPTestBase {
     
     public static final String TABLENAME = "newtablename";
     //测试点
-    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*does not have USAGE privilege on.*")
+    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*does not have usage privilege on.*")
     public void test() throws SQLException {
         Connection conn1 = null,conn2 = null;
         Statement st1 = null,st2 = null;

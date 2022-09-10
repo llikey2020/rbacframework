@@ -17,7 +17,7 @@ public class GrantCreateDBNonexistingGroupSdp_236 extends SDPTestBase {
     public GrantCreateDBNonexistingGroupSdp_236() {
         super.hasGroup();
     }
-    public static final String DBNAME = "newdbname";
+    public static final String DBNAME = "newdbname2";
     //测试点
     @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*Operation not allowed.*")
     public void test() throws SQLException {
@@ -35,6 +35,8 @@ public class GrantCreateDBNonexistingGroupSdp_236 extends SDPTestBase {
             e.printStackTrace();
             throw e;
         }finally {
+            String dropdbsql = HiveConnection.getInstance().dropSql("database",DBNAME );
+            st1.executeQuery(dropdbsql);
             st1.close();
             conn1.close();
 

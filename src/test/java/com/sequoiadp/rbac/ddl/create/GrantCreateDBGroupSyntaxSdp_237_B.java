@@ -18,7 +18,7 @@ public class GrantCreateDBGroupSyntaxSdp_237_B extends SDPTestBase {
     public GrantCreateDBGroupSyntaxSdp_237_B() {
         super.hasGroup();
     }
-    public static final String DBNAME = "newdbname";
+    public static final String DBNAME = "newdbname1";
     //测试点
     @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*Operation not allowed.*")
     public void test() throws SQLException {

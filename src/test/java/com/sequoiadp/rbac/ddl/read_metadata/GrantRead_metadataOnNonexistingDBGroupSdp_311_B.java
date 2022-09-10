@@ -19,7 +19,7 @@ public class GrantRead_metadataOnNonexistingDBGroupSdp_311_B extends SDPTestBase
         super.hasGroup();
     }
     //测试点
-    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*update message Database name cannot be found in table name.*")
+    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*update message to expected messge, once the defect is fixed. Database name cannot be found in table name.*")
     public void test() throws SQLException {
         Connection conn1 = null;
         Statement st1 = null;

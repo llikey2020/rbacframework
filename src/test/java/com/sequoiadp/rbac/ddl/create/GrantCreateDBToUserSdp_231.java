@@ -14,7 +14,7 @@ import com.sequoiadp.testcommon.SDPTestBase;
  * @Author        : Lena
  */
 public class GrantCreateDBToUserSdp_231 extends SDPTestBase {
-    public static final String DBNAME = "newdbname";
+    public static final String DBNAME = "newdbname5";
     //测试点
     @Test
     public void test() throws SQLException {

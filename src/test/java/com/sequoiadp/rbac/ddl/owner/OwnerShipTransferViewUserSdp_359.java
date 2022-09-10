@@ -13,7 +13,7 @@ public class OwnerShipTransferViewUserSdp_359 extends SDPViewTestBase {
       //  super.setViewName(this.getTableName() + "_view");
     }
     @Test (expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*does not have grant privilege on.*")
-    public void test() throws SQLException {
+    public void test() throws SQLException, InterruptedException {
         Connection conn1 = null,conn2 = null,conn3 =  null;
         Statement st1 = null,st2 = null, st3 = null;
         try {
@@ -45,7 +45,9 @@ public class OwnerShipTransferViewUserSdp_359 extends SDPViewTestBase {
             
             conn3 = HiveConnection.getInstance().getNonownerConnect();
             st3 = conn3.createStatement();
+            st3.executeQuery(usagesql);  
             String transfergrantsql2 = HiveConnection.getInstance().grantSql("select","view","viewname","user",getConfig("testUser"));
+            Thread.sleep(10000); 
             st3.executeQuery(transfergrantsql2);
             
 			String dropsql = HiveConnection.getInstance().dropSql("view", getConfig("dbName") + "." + "viewname");

@@ -35,10 +35,12 @@ public class NonownerGrantSelectViewGroupSdp_200_B extends SDPViewTestBase {
             
             String addgpusersql = HiveConnection.getInstance().alterUserSql(getConfig("testGroup"),"add", getConfig("testUser"));
             st1.executeQuery(addgpusersql);
+            String grantsql = HiveConnection.getInstance().grantSql("usage","database",getConfig("dbName"),"user",getConfig("nonowner"));
+            st1.executeQuery(grantsql);
             
             conn3 = HiveConnection.getInstance().getNonownerConnect();
             st3= conn3.createStatement();
-            
+            st3.executeQuery(usagesql);
             String grantsqlview = HiveConnection.getInstance().grantSql("select","view",viewName,"group",getConfig("testGroup"));
             st3.executeQuery(grantsqlview);
             

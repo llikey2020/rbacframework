@@ -14,7 +14,7 @@ import com.sequoiadp.testcommon.SDPTestBase;
  * @Author        : Lena
  */
 public class GrantCreateDBWithoutKeywordUserSdp_233 extends SDPTestBase {
-    public static final String DBNAME = "newdbname";
+    public static final String DBNAME = "newdbname8";
     //测试点
     @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*Operation not allowed.*")
     public void test() throws SQLException {

@@ -18,7 +18,7 @@ public class GrantRead_metadataOnDBToNonexistingGroupSdp_312_B extends SDPTestBa
         super.setTableName("tablea");
     }
     //测试点
-    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*Operation not allowed.*")
+    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*update message to expected messge once defect is fixed. Operation not allowed.*")
     public void test() throws SQLException {
         Connection conn1 = null,conn2 = null;
         Statement st1 = null,st2 = null;
