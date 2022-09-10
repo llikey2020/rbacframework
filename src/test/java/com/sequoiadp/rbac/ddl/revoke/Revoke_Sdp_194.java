@@ -1,4 +1,4 @@
-package com.sequoiadp.rbac.ddl.view;
+package com.sequoiadp.rbac.ddl.revoke;
 
 import com.sequoiadp.testcommon.HiveConnection;
 import com.sequoiadp.testcommon.SDPViewTestBase;
@@ -8,18 +8,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /*
- * @Description   : GRANT SELECT ON VIEW without granting usage to user
+ * @Description   : GRANT SELECT ON VIEW to USER - revoke
  * @Author        : Lena
  */
 
-public class GrantSelectOnViewWithoutUsageSdp_202 extends SDPViewTestBase {
-    public GrantSelectOnViewWithoutUsageSdp_202() {
+public class Revoke_Sdp_194 extends SDPViewTestBase {
+    public Revoke_Sdp_194() {
         super.setTableName("tablea");
         super.setViewName(this.getTableName() + "_view");
-        super.notUsage();
     }
     //测试点
-    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*does not have usage privilege on.*")
+    @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*does not have select privilege.*")
     public void test() throws SQLException {
         Connection conn1 = null,conn2 = null;
         Statement st1 = null,st2 = null;
@@ -37,6 +36,14 @@ public class GrantSelectOnViewWithoutUsageSdp_202 extends SDPViewTestBase {
             st2 = conn2.createStatement();
             String selectsql = HiveConnection.getInstance().selectTv(getConfig("dbName"),viewName);
             st2.executeQuery(selectsql);
+            
+            // super user revoke the privilege and verify the result            
+            String revokesql = HiveConnection.getInstance().revokeSql("select","view",viewName,"user",getConfig("testUser"));
+            st1.executeQuery(revokesql);
+            
+            st2.executeQuery(selectsql);         
+            
+            
 
         } catch ( SQLException e) {
             e.printStackTrace();

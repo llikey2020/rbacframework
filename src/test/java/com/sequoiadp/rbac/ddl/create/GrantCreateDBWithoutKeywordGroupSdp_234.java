@@ -18,7 +18,7 @@ public class GrantCreateDBWithoutKeywordGroupSdp_234 extends SDPTestBase {
     public GrantCreateDBWithoutKeywordGroupSdp_234() {
         super.hasGroup();
     }
-    public static final String DBNAME = "newdbname";
+    public static final String DBNAME = "newdbname7";
     //测试点
     @Test(expectedExceptions =  { java.sql.SQLException.class },expectedExceptionsMessageRegExp = ".*Operation not allowed.*")
     public void test() throws SQLException {
