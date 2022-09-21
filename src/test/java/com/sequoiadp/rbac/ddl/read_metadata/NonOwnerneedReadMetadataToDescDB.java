@@ -9,14 +9,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /*
- * @Description   : GRANT READ_METADATA ON TABLE to USER
+ * @Description   : non Database Owner needs read_metadata privilege only to describe database
  * @Author        : Lena
  */
 
-public class GrantRead_metadataOnTableUserSdp_302 extends SDPTestBase {
-    public GrantRead_metadataOnTableUserSdp_302() {
-        super.setTableName("tablea");
-    }
+public class NonOwnerneedReadMetadataToDescDB extends SDPTestBase {
+
     //测试点
     @Test
     public void test() throws SQLException {
@@ -28,29 +26,34 @@ public class GrantRead_metadataOnTableUserSdp_302 extends SDPTestBase {
             st1= conn1.createStatement();
             String usagesql = HiveConnection.getInstance().usageSql(getConfig("dbName"));
             st1.executeQuery(usagesql);
-            String grantsql = HiveConnection.getInstance().grantSql("read_metadata","table",tableName,"user",getConfig("testUser"));
+            String grantsql = HiveConnection.getInstance().grantSql("read_metadata","database",getConfig("dbName"),"user",getConfig("testUser"));
             st1.executeQuery(grantsql);
             //测试用户test来验证管理员的语句
             conn2 = HiveConnection.getInstance().getTestConnect();
             st2 = conn2.createStatement();
-            st2.executeQuery(usagesql);
-            String descsql = "desc table " + tableName;
+            String descsql = "desc database " + getConfig("dbName");
             st2.executeQuery(descsql);
             
-            String selectsql = HiveConnection.getInstance().selectTv(getConfig("dbName"),tableName);
-            String explainsql = "explain " + selectsql;
-            st2.executeQuery(explainsql);
-
+            String addgpusersql = HiveConnection.getInstance().alterUserSql(getConfig("testGroup"),"add", getConfig("nonowner"));
+            st1.executeQuery(addgpusersql);
+            String grantsql2 = HiveConnection.getInstance().grantSql("read_metadata","database",getConfig("dbName"),"user",getConfig("testGroup"));
+            st1.executeQuery(grantsql2);
+            
+            //测试用户test来验证管理员的语句
+            conn3 = HiveConnection.getInstance().getTestConnect();
+            st3 = conn3.createStatement();
+            String descsql2 = "desc database " + getConfig("dbName");
+            st3.executeQuery(descsql2);
+            
         } catch ( SQLException e) {
             e.printStackTrace();
             throw e;
         }finally {
             st1.close();
             st2.close();
-            st2.close();
             conn1.close();
             conn2.close();
-            conn3.close();
         }
     }
 }
+
